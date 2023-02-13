@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="《亮剑》"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--    </bean>-->
+
+    <!--  setter 注入  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="null"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--    </bean>-->
+
+    <!--  构造器注入  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <constructor-arg name="id" value="1"></constructor-arg>-->
+    <!--        <constructor-arg name="name" value="《少年歌行》"></constructor-arg>-->
+    <!--        <constructor-arg name="price" value="56.5"></constructor-arg>-->
+    <!--    </bean>-->
+
+    <!--  注入数组  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="《亮剑》"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--        <property name="tags">-->
+    <!--            <array>-->
+    <!--                <value>战争</value>-->
+    <!--                <value>历史</value>-->
+    <!--            </array>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+    <!--  外部 Bean、List  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="《亮剑》"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--        <property name="tags">-->
+    <!--            <array>-->
+    <!--                <value>战争</value>-->
+    <!--                <value>历史</value>-->
+    <!--            </array>-->
+    <!--        </property>-->
+    <!--        <property name="comments">-->
+    <!--            <list>-->
+    <!--                <value>好看！</value>-->
+    <!--                <value>热血！</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        <property name="author" ref="author"></property>-->
+    <!--    </bean>-->
+    <!--    <bean id="author" class="io.github.cunyu1943.domain.Author">-->
+    <!--        <property name="age" value="45"></property>-->
+    <!--        <property name="name" value="都梁"></property>-->
+    <!--    </bean>-->
+
+
+    <!--  内部 Bean  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="《亮剑》"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--        <property name="tags">-->
+    <!--            <array>-->
+    <!--                <value>战争</value>-->
+    <!--                <value>历史</value>-->
+    <!--            </array>-->
+    <!--        </property>-->
+    <!--        <property name="comments">-->
+    <!--            <list>-->
+    <!--                <value>好看！</value>-->
+    <!--                <value>热血！</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        <property name="author">-->
+    <!--            <bean id="author" class="io.github.cunyu1943.domain.Author">-->
+    <!--                <property name="age" value="45"></property>-->
+    <!--                <property name="name" value="都梁"></property>-->
+    <!--            </bean>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+    <!--  级联  -->
+    <!--    <bean id="book" class="io.github.cunyu1943.domain.Book">-->
+    <!--        <property name="id" value="1"></property>-->
+    <!--        <property name="name" value="《亮剑》"></property>-->
+    <!--        <property name="price" value="45.0"></property>-->
+    <!--        <property name="tags">-->
+    <!--            <array>-->
+    <!--                <value>战争</value>-->
+    <!--                <value>历史</value>-->
+    <!--            </array>-->
+    <!--        </property>-->
+    <!--        <property name="comments">-->
+    <!--            <list>-->
+    <!--                <value>好看！</value>-->
+    <!--                <value>热血！</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        <property name="author" ref="author1"></property>-->
+    <!--        <property name="author.name" value="测试"></property>-->
+    <!--        <property name="author.age" value="55"></property>-->
+    <!--    </bean>-->
+    <!--    <bean id="author1" class="io.github.cunyu1943.domain.Author">-->
+    <!--        <property name="age" value="45"></property>-->
+    <!--        <property name="name" value="都梁"></property>-->
+    <!--    </bean>-->
+
+    <!--  Map 注入  -->
+    <bean id="book" class="io.github.cunyu1943.domain.Book">
+        <property name="id" value="1"></property>
+        <property name="name" value="《亮剑》"></property>
+        <property name="price" value="45.0"></property>
+        <property name="tags">
+            <array>
+                <value>战争</value>
+                <value>历史</value>
+            </array>
+        </property>
+        <property name="comments">
+            <list>
+                <value>好看！</value>
+                <value>热血！</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="author" class="io.github.cunyu1943.domain.Author">
+        <property name="age" value="45"></property>
+        <property name="name" value="都梁"></property>
+        <property name="authorMap">
+            <map>
+                <entry>
+                    <key>
+                        <value>book1</value>
+                    </key>
+                    <ref bean="book"></ref>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

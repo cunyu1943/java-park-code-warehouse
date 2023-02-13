@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+    <!--  配置详解： https://www.cnblogs.com/lzb1096101803/p/5796849.html  -->
+    <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+
+    <!--变量配置-->
+    <Properties>
+        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+        <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+        <!-- 定义日志存储的路径 -->
+        <property name="FILE_PATH" value="更换为你的日志路径"/>
+        <property name="FILE_NAME" value="更换为你的项目名"/>
+        <!--  以上配置暂不使用，仅供了解  -->
+
+        <!--  输出路径  -->
+        <Property name="logpath">logs/</Property>
+    </Properties>
+
+
+    <!--先定义所有的appender-->
+    <Appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--输出日志的格式-->
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+
+            <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="all" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+        <File name="Filelog" fileName="${logpath}/app.log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </File>
+
+        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="debug" fileName="${logpath}/debug/app_debug.log"
+                     filePattern="${logpath}/debug/app_debug_%d{yyyy-MM-dd}-%i.log">
+
+            <!--Filters决定日志事件能否被输出。过滤条件有三个值：ACCEPT(接受), DENY(拒绝) or NEUTRAL(中立).
+                ACCEP和DENY比较好理解就是接受和拒绝的意思，在使用单个过滤器的时候，一般就是使用这两个值。
+                但是在组合过滤器中，如果用接受ACCEPT的话，日志信息就会直接写入日志文件,后续的过滤器不再进行过滤。
+                所以，在组合过滤器中，接受使用NEUTRAL（中立），被第一个过滤器接受的日志信息，会继续用后面的过滤器进行过滤，
+                只有符合所有过滤器条件的日志信息，才会被最终写入日志文件。 -->
+            <Filters>
+                <!--ThresholdFilter
+                    有几个参数：
+                    level：将被过滤的级别。
+                    onMatch:默认值是NEUTRAL
+                    onMismatch：默认是DENY
+                    如果LogEvent 中的 Log Level 大于 ThresholdFilter 中配置的 Log Level，那么返回 onMatch 的值， 否则返回 onMismatch 的值，
+                    例如 : 如果ThresholdFilter 配置的 Log Level 是 ERROR ， LogEvent 的Log Level 是 DEBUG。 那么 onMismatch 的值将被返回，
+                    因为 ERROR 小于DEBUG。如果是Accept，将自己被接受，而不经过下一个过滤器 -->
+
+                <!--如果level大于info级别及其以上返回DENY（拒绝），否则返回NEUTRAL(中立)，如果后面没有其他过滤器，则被接受；否则继续下一个校验，
+                  如果level大于debug级别及其以上返回ACCEPT(接受)，否则返回DENY（拒绝）-->
+                <!-- 综上：该配置只接受debug类型的日志-->
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>\
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了30 -->
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${logpath}/debug" maxDepth="1">
+                    <IfFileName glob="app_debug_*.log"/>
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+
+        <RollingFile name="info" fileName="${logpath}/info/app_info.log"
+                     filePattern="${logpath}/info/app_info_%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!-- 该配置只接受info类型的日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>\
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${logpath}/info" maxDepth="1">
+                    <IfFileName glob="app_info_*.log"/>
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="warn" fileName="${logpath}/warn/app_warn.log"
+                     filePattern="${logpath}/warn/app_warn_%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!-- 该配置只接受warn类型的日志-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>\
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${logpath}/warn" maxDepth="1">
+                    <IfFileName glob="app_warn_*.log"/>
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="error" fileName="${logpath}/error/app_error.log"
+                     filePattern="${logpath}/error/app_error_%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!-- 该配置只接受error类型的日志-->
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+                <!--   每个文件最大50M -->
+                <SizeBasedTriggeringPolicy size="50 MB"/>\
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${logpath}/error" maxDepth="1">
+                    <IfFileName glob="app_error_*.log"/>
+                    <!-- 设置最大保存时间为15天-->
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+    </Appenders>
+
+
+    <!--切换输出级别-->
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <Loggers>
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <logger name="org.springframework" level="INFO"></logger>
+        <logger name="org.mybatis" level="INFO"></logger>
+
+        <!-- 级别顺序（低到高）：TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
+        <!-- 需要哪个级别的日志就放开哪一个注释，不需要的就注释掉-->
+
+        <!-- <Root level="info"> level="all",执行以下是有的配置；level="info"执行info及以上的配置，哪怕debug配置了也不执行日志 -->
+        <Root level="all">
+
+            <AppenderRef ref="Console"/>
+
+
+            <AppenderRef ref="debug"/>
+            <AppenderRef ref="info"/>
+
+            <!--
+            <AppenderRef ref="warn"/>
+            <AppenderRef ref="error"/>
+            -->
+            <!--测试时使用，打印所有的日志信息-->
+            <AppenderRef ref="Filelog"/>
+
+        </Root>
+    </Loggers>
+</Configuration>
