@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--  Map 注入  -->
+    <bean id="book" class="io.github.cunyu1943.domain.Book">
+        <property name="id" value="1"></property>
+        <property name="name" value="《亮剑》"></property>
+        <property name="price" value="45.0"></property>
+    </bean>
+
+    <bean id="author" class="io.github.cunyu1943.domain.Author">
+        <property name="age" value="45"></property>
+        <property name="name" value="都梁"></property>
+        <property name="authorMap">
+            <map>
+                <entry>
+                    <key>
+                        <value>book1</value>
+                    </key>
+                    <ref bean="book"></ref>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

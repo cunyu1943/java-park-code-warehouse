@@ -22,39 +22,73 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestBook {
     private Logger logger = LoggerFactory.getLogger(TestBook.class);
 
-    //@Test
-    //public void testDiSet() {
-    //    Book book = new Book();
-    //    book.setName("《狂飙》");
-    //    book.setId(1L);
-    //    book.setPrice(48.00D);
-    //
-    //    logger.info(book.toString());
-    //}
-    //
-    //@Test
-    //public void testDiConstructor() {
-    //    Book book = new Book(1L, "《沉默的真相》", 56.00D);
-    //    logger.info(book.toString());
-    //}
+    @Test
+    public void testDiSet() {
+        Book book = new Book();
+        book.setName("《狂飙》");
+        book.setId(1L);
+        book.setPrice(48.00D);
+        logger.info(book.toString());
+    }
 
-    //@Test
-    //public void testDiSetXml() {
-    //    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
-    //    Book book = (Book) applicationContext.getBean("book");
-    //    logger.info(book.toString());
-    //}
+    @Test
+    public void testDiConstructor() {
+        Book book = new Book(1L, "《沉默的真相》", 56.00D, null, null, null);
+        logger.info(book.toString());
+    }
 
-    //@Test
-    //public void testDiConstructorXml() {
-    //    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
-    //    Book book = (Book) applicationContext.getBean("book");
-    //    logger.info(book.toString());
-    //}
+    @Test
+    public void testDiSetXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-set.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiConstructorXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-constructor.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiArrayXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-array.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiBeanOuterXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-bean-outer.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiListXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-list.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiBeanInnerXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-bean-inner.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
+
+    @Test
+    public void testDiBeanCascadeXml() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-bean-cascade.xml");
+        Book book = (Book) applicationContext.getBean("book");
+        logger.info(book.toString());
+    }
 
     @Test
     public void testDiMapXml() {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("di-map.xml");
         Author author = applicationContext.getBean("author", Author.class);
         logger.info(author.toString());
     }
