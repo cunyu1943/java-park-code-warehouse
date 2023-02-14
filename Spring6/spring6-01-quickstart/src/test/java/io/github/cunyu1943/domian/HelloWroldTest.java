@@ -26,7 +26,7 @@ public class HelloWroldTest {
     private Logger logger = LoggerFactory.getLogger(HelloWroldTest.class);
 
     @Test
-    public void testHelloWorld() {
+    public void testHelloWorld1() {
 
         // 加载 Spring 配置文件，创建对象
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -41,11 +41,13 @@ public class HelloWroldTest {
     }
 
     @Test
-    public void testWrold() throws Exception {
+    public void testHelloWorld2() throws Exception {
         // 获取类的 class 对象
         Class helloWorldClass = Class.forName("io.github.cunyu1943.domian.domain.HelloWorld");
 
         // 调用方法创建对象
         HelloWorld helloWorld = (HelloWorld) helloWorldClass.getDeclaredConstructor().newInstance();
+        logger.info("通过反射创建对象成功");
+        helloWorld.meeting();
     }
 }

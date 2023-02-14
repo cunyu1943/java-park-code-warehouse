@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class HelloWorld {
     private Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+
     public void meeting() {
         logger.info("Hello Wrorld, Spring.");
     }
