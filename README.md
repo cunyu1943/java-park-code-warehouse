@@ -6,11 +6,11 @@
 
 ## 目录
 
-### Spring6
+### spring6-tutorial
 
-1. [spring6-01-quickstart](./Spring6/spring6-01-quickstart)
-2. [spring6-02-ioc-xml](./Spring6/spring6-02-ioc-xml)
-3. [spring6-03-di](./Spring6/spring6-03-di)
+1. [spring6-tutorial-01](spring6-tutorial/spring6-tutorial-01)
+2. [spring6-tutorial-02](spring6-tutorial/spring6-tutorial-02)
+3. [spring6-tutorial-03](spring6-tutorial/spring6-tutorial-03)
 
 ## 参与贡献
 
