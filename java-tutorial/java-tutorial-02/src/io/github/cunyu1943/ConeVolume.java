@@ -19,6 +19,7 @@ public class ConeVolume {
         int radius = 10;
         int height = 5;
 
+        // 圆锥体体积 = PI * 底面积 * 高，而底面积 = 圆的面积
         double volume = pi * radius * radius * height;
 
         System.out.println("圆锥体的体积为：" + volume);
