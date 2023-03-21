@@ -25,5 +25,6 @@ public class Odevity {
             System.out.println(num + " 是一个偶数。");
         }
         System.out.println(num + " 是一个奇数。");
+        input.close();
     }
 }
